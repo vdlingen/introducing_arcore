@@ -1,0 +1,373 @@
+{
+    "accessors" : [
+        {
+            "bufferView" : 0, 
+            "componentType" : 5123, 
+            "count" : 46488, 
+            "max" : [
+                28528
+            ], 
+            "min" : [
+                0
+            ], 
+            "type" : "SCALAR"
+        }, 
+        {
+            "bufferView" : 1, 
+            "componentType" : 5126, 
+            "count" : 28529, 
+            "max" : [
+                2.8227005004882812, 
+                6.918175220489502, 
+                0.5879598259925842
+            ], 
+            "min" : [
+                -2.822702169418335, 
+                -0.0077899242751300335, 
+                -0.9018781185150146
+            ], 
+            "type" : "VEC3"
+        }, 
+        {
+            "bufferView" : 2, 
+            "componentType" : 5126, 
+            "count" : 28529, 
+            "max" : [
+                0.9981456995010376, 
+                1.0, 
+                1.0
+            ], 
+            "min" : [
+                -0.998145580291748, 
+                -1.0, 
+                -1.0
+            ], 
+            "type" : "VEC3"
+        }, 
+        {
+            "bufferView" : 3, 
+            "componentType" : 5125, 
+            "count" : 893082, 
+            "max" : [
+                433906
+            ], 
+            "min" : [
+                0
+            ], 
+            "type" : "SCALAR"
+        }, 
+        {
+            "bufferView" : 4, 
+            "componentType" : 5126, 
+            "count" : 433907, 
+            "max" : [
+                2.1575229167938232, 
+                9.203574180603027, 
+                0.8156924247741699
+            ], 
+            "min" : [
+                -2.157522678375244, 
+                2.7035741806030273, 
+                -0.915228009223938
+            ], 
+            "type" : "VEC3"
+        }, 
+        {
+            "bufferView" : 5, 
+            "componentType" : 5126, 
+            "count" : 433907, 
+            "max" : [
+                0.9978588819503784, 
+                1.0, 
+                1.0
+            ], 
+            "min" : [
+                -0.9978589415550232, 
+                -1.0, 
+                -1.0
+            ], 
+            "type" : "VEC3"
+        }, 
+        {
+            "bufferView" : 6, 
+            "componentType" : 5125, 
+            "count" : 157614, 
+            "max" : [
+                88338
+            ], 
+            "min" : [
+                0
+            ], 
+            "type" : "SCALAR"
+        }, 
+        {
+            "bufferView" : 7, 
+            "componentType" : 5126, 
+            "count" : 88339, 
+            "max" : [
+                2.8227005004882812, 
+                9.359042167663574, 
+                0.6358816623687744
+            ], 
+            "min" : [
+                -2.822702169418335, 
+                1.684497594833374, 
+                -0.5408748388290405
+            ], 
+            "type" : "VEC3"
+        }, 
+        {
+            "bufferView" : 8, 
+            "componentType" : 5126, 
+            "count" : 88339, 
+            "max" : [
+                0.9997754096984863, 
+                1.0, 
+                1.0
+            ], 
+            "min" : [
+                -0.9997754096984863, 
+                -1.0, 
+                -1.0
+            ], 
+            "type" : "VEC3"
+        }, 
+        {
+            "bufferView" : 9, 
+            "componentType" : 5123, 
+            "count" : 2988, 
+            "max" : [
+                1631
+            ], 
+            "min" : [
+                0
+            ], 
+            "type" : "SCALAR"
+        }, 
+        {
+            "bufferView" : 10, 
+            "componentType" : 5126, 
+            "count" : 1632, 
+            "max" : [
+                2.8227005004882812, 
+                8.079089164733887, 
+                0.5756235122680664
+            ], 
+            "min" : [
+                -2.822702169418335, 
+                4.4890899658203125, 
+                -0.28805309534072876
+            ], 
+            "type" : "VEC3"
+        }, 
+        {
+            "bufferView" : 11, 
+            "componentType" : 5126, 
+            "count" : 1632, 
+            "max" : [
+                0.9978589415550232, 
+                1.0, 
+                0.9978594183921814
+            ], 
+            "min" : [
+                -0.9978593587875366, 
+                -1.0, 
+                -1.0
+            ], 
+            "type" : "VEC3"
+        }
+    ], 
+    "asset" : {
+        "generator" : "Khronos Blender glTF 2.0 exporter", 
+        "version" : "2.0"
+    }, 
+    "bufferViews" : [
+        {
+            "buffer" : 0, 
+            "byteLength" : 92976, 
+            "byteOffset" : 0, 
+            "target" : 34963
+        }, 
+        {
+            "buffer" : 0, 
+            "byteLength" : 342348, 
+            "byteOffset" : 92976, 
+            "target" : 34962
+        }, 
+        {
+            "buffer" : 0, 
+            "byteLength" : 342348, 
+            "byteOffset" : 435324, 
+            "target" : 34962
+        }, 
+        {
+            "buffer" : 0, 
+            "byteLength" : 3572328, 
+            "byteOffset" : 777672, 
+            "target" : 34963
+        }, 
+        {
+            "buffer" : 0, 
+            "byteLength" : 5206884, 
+            "byteOffset" : 4350000, 
+            "target" : 34962
+        }, 
+        {
+            "buffer" : 0, 
+            "byteLength" : 5206884, 
+            "byteOffset" : 9556884, 
+            "target" : 34962
+        }, 
+        {
+            "buffer" : 0, 
+            "byteLength" : 630456, 
+            "byteOffset" : 14763768, 
+            "target" : 34963
+        }, 
+        {
+            "buffer" : 0, 
+            "byteLength" : 1060068, 
+            "byteOffset" : 15394224, 
+            "target" : 34962
+        }, 
+        {
+            "buffer" : 0, 
+            "byteLength" : 1060068, 
+            "byteOffset" : 16454292, 
+            "target" : 34962
+        }, 
+        {
+            "buffer" : 0, 
+            "byteLength" : 5976, 
+            "byteOffset" : 17514360, 
+            "target" : 34963
+        }, 
+        {
+            "buffer" : 0, 
+            "byteLength" : 19584, 
+            "byteOffset" : 17520336, 
+            "target" : 34962
+        }, 
+        {
+            "buffer" : 0, 
+            "byteLength" : 19584, 
+            "byteOffset" : 17539920, 
+            "target" : 34962
+        }
+    ], 
+    "buffers" : [
+        {
+            "byteLength" : 17559504, 
+            "uri" : "android_oreo.bin"
+        }
+    ], 
+    "materials" : [
+        {
+            "name" : "green", 
+            "pbrMetallicRoughness" : {
+                "baseColorFactor" : [
+                    0.2969902082829208, 
+                    0.4517692633236834, 
+                    0.03273216534751899, 
+                    1.0
+                ], 
+                "metallicFactor" : 0.0
+            }
+        }, 
+        {
+            "name" : "Grey", 
+            "pbrMetallicRoughness" : {
+                "baseColorFactor" : [
+                    0.43057909653453663, 
+                    0.43057909653453663, 
+                    0.43057909653453663, 
+                    1.0
+                ], 
+                "metallicFactor" : 0.0
+            }
+        }, 
+        {
+            "name" : "SVGMat", 
+            "pbrMetallicRoughness" : {
+                "baseColorFactor" : [
+                    0.14731353521347046, 
+                    0.029487069696187973, 
+                    0.0, 
+                    1.0
+                ], 
+                "metallicFactor" : 0.0
+            }
+        }, 
+        {
+            "name" : "white", 
+            "pbrMetallicRoughness" : {
+                "baseColorFactor" : [
+                    0.800000011920929, 
+                    0.800000011920929, 
+                    0.800000011920929, 
+                    1.0
+                ], 
+                "metallicFactor" : 0.0
+            }
+        }
+    ], 
+    "meshes" : [
+        {
+            "name" : "Sphere.001", 
+            "primitives" : [
+                {
+                    "attributes" : {
+                        "NORMAL" : 2, 
+                        "POSITION" : 1
+                    }, 
+                    "indices" : 0, 
+                    "material" : 0
+                }, 
+                {
+                    "attributes" : {
+                        "NORMAL" : 5, 
+                        "POSITION" : 4
+                    }, 
+                    "indices" : 3, 
+                    "material" : 2
+                }, 
+                {
+                    "attributes" : {
+                        "NORMAL" : 8, 
+                        "POSITION" : 7
+                    }, 
+                    "indices" : 6, 
+                    "material" : 3
+                }, 
+                {
+                    "attributes" : {
+                        "NORMAL" : 11, 
+                        "POSITION" : 10
+                    }, 
+                    "indices" : 9, 
+                    "material" : 1
+                }
+            ]
+        }
+    ], 
+    "nodes" : [
+        {
+            "mesh" : 0, 
+            "name" : "android_oreo", 
+            "scale" : [
+                0.009999990463256836, 
+                0.009999990463256836, 
+                0.009999990463256836
+            ]
+        }
+    ], 
+    "scene" : 0, 
+    "scenes" : [
+        {
+            "name" : "Scene", 
+            "nodes" : [
+                0
+            ]
+        }
+    ]
+}
