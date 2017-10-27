@@ -59,6 +59,11 @@ abstract class ARCoreActivity(
 
     var cameraTextureId = 0
 
+
+    abstract fun initializeGL()
+    abstract fun renderFrame(frame: Frame)
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         super.setContentView(layout)
@@ -134,10 +139,6 @@ abstract class ARCoreActivity(
             renderFrame(frame)
         }
     }
-
-    abstract fun initializeGL()
-    abstract fun renderFrame(frame: Frame)
-
 
     //
     // Force app to run in full screen immersive mode for best AR experience.
@@ -216,7 +217,7 @@ abstract class ARCoreActivity(
 
         for (asset in assets.list(folderName)) {
             File(assetDir, asset).apply {
-                writeBytes(assets.open("models/$asset").readBytes())
+                writeBytes(assets.open("$folderName/$asset").readBytes())
                 Log.d("ASSET", "copied asset to $absolutePath")
             }
         }

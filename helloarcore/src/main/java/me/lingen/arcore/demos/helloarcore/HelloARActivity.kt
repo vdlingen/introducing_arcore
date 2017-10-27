@@ -48,7 +48,7 @@ class HelloARActivity : ARCoreActivity() {
         super.onCreate(savedInstanceState)
 
         val modelsDir = copyAssetFolder("models")
-        model = parseGlTF(File(modelsDir, "dutchaug.gltf"))
+        model = parseGlTF(File(modelsDir, "android.gltf"))
 
         gestureDetector = GestureDetector(this, gestureListener)
         arView.setOnTouchListener { _, motionEvent -> gestureDetector.onTouchEvent(motionEvent) }
@@ -83,12 +83,12 @@ class HelloARActivity : ARCoreActivity() {
         cameraRenderer.render(frame)
 
         if (frame.trackingState != Frame.TrackingState.TRACKING) return
-        if (frame.updatedPlanes.size > 0) hideStatusMessage()
+        if (frame.updatedPlanes.isNotEmpty()) hideStatusMessage()
 
         pendingTap?.let {
             frame.hitTest(it)
-                    .filter { it is PlaneHitResult && it.isHitInPolygon }
-                    .firstOrNull()?.let { arSession.addAnchor(it.hitPose) }
+                    .firstOrNull { it is PlaneHitResult && it.isHitInPolygon }
+                    ?.let { arSession.addAnchor(it.hitPose) }
 
             pendingTap = null
         }
