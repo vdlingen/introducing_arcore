@@ -1,6 +1,6 @@
 # Introducing ARCore
 
-This repository contains some sample apps for ARCore written in Kotlin. It is used for live coding demonstrations and workshops accompanying my 'Introducing ARCore' talk.
+This repository contains some sample apps for ARCore written in Kotlin. It is used for live coding demonstrations and workshops accompanying my 'Introducing ARCore' talk ([slides](http://lingen.me/talk/2017/10/28/introducing-arcore/)).
 
 ## common module
 The common module contains the shared utility code used in the different sample apps.
