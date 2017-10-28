@@ -80,8 +80,8 @@ class ARCursorActivity : ARCoreActivity() {
         if (frame.trackingState == Frame.TrackingState.NOT_TRACKING) return
 
         lastPose = frame.hitTest(0.5f * displayWidth, 0.5f * displayHeight)
-                .filter { it is PlaneHitResult && it.isHitInPolygon }
-                .firstOrNull()?.hitPose
+                .firstOrNull { it is PlaneHitResult && it.isHitInPolygon }
+                ?.hitPose
 
         arSession.getProjectionMatrix(projectionMatrix, 0, 0.1f, 100f)
         frame.getViewMatrix(viewMatrix, 0)
