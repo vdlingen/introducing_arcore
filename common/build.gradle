@@ -37,9 +37,10 @@ android {
 }
 
 dependencies {
-    api fileTree(dir: 'libs', include: ['*.jar', '*.aar'])
+    api fileTree(dir: 'libs', include: ['*.jar'])
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
     implementation 'com.android.support:appcompat-v7:26.1.0'
     implementation 'com.android.support:design:26.1.0'
-    implementation "com.squareup.moshi:moshi-kotlin:1.5.0"
+    implementation 'com.squareup.moshi:moshi-kotlin:1.5.0'
+    api 'com.google.ar:core:0.91.0'
 }

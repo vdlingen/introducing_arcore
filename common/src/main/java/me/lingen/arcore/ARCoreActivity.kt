@@ -30,12 +30,16 @@ import android.support.v4.app.ActivityCompat
 import android.support.v4.content.ContextCompat
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
+import android.view.Display
 import android.view.View
 import android.view.WindowManager
 import android.widget.Toast
 import com.google.ar.core.Config
 import com.google.ar.core.Frame
 import com.google.ar.core.Session
+import com.google.ar.core.exceptions.UnavailableApkTooOldException
+import com.google.ar.core.exceptions.UnavailableArcoreNotInstalledException
+import com.google.ar.core.exceptions.UnavailableSdkTooOldException
 import me.lingen.common.R
 import java.io.File
 import javax.microedition.khronos.egl.EGLConfig
@@ -49,6 +53,8 @@ abstract class ARCoreActivity(
         @LayoutRes val layout: Int = R.layout.activity_ar,
         @IdRes val glSurfaceViewId: Int = R.id.glSurfaceView)
     : AppCompatActivity() {
+
+    lateinit var displayRotationHelper: DisplayRotationHelper
 
     lateinit var arConfig: Config
     lateinit var arSession: Session
@@ -68,6 +74,8 @@ abstract class ARCoreActivity(
         super.onCreate(savedInstanceState)
         super.setContentView(layout)
 
+        displayRotationHelper = DisplayRotationHelper(this)
+
         arView = findViewById<GLSurfaceView>(glSurfaceViewId).apply {
             preserveEGLContextOnPause = true
             setEGLContextClientVersion(2)
@@ -76,22 +84,43 @@ abstract class ARCoreActivity(
             renderMode = GLSurfaceView.RENDERMODE_CONTINUOUSLY
         }
 
-        arSession = Session(this)
-        arConfig = Config.createDefaultConfig()
+        var message: String? = null
 
+        try {
+            arSession = Session(this)
+        } catch (e: UnavailableArcoreNotInstalledException) {
+            message = "Please install ARCore"
+        } catch (e: UnavailableApkTooOldException) {
+            message = "Please update ARCore"
+        } catch (e: UnavailableSdkTooOldException) {
+            message = "Please update this app"
+        } catch (e: Exception) {
+            message = "This device does not support AR"
+        }
+
+        message?.let {
+            Toast.makeText(this, message, Toast.LENGTH_LONG).show();
+            finish()
+            return
+        }
+
+        arConfig = Config(arSession)
         if (!arSession.isSupported(arConfig)) {
             Toast.makeText(this, "This device does not support ARCore", Toast.LENGTH_LONG).show()
             finish()
             return
         }
+
+        arSession.configure(arConfig)
     }
 
     override fun onResume() {
         super.onResume()
 
         if (hasCameraPermission()) {
-            arSession.resume(arConfig)
+            arSession.resume()
             arView.onResume()
+            displayRotationHelper.onResume()
         } else {
             requestCameraPermission()
         }
@@ -99,6 +128,7 @@ abstract class ARCoreActivity(
 
     override fun onPause() {
         super.onPause()
+        displayRotationHelper.onPause()
         arView.onPause()
         arSession.pause()
     }
@@ -127,13 +157,16 @@ abstract class ARCoreActivity(
 
         override fun onSurfaceChanged(gl: GL10?, width: Int, height: Int) {
             glViewport(0, 0, width, height)
-            arSession.setDisplayGeometry(width.toFloat(), height.toFloat())
+
+            displayRotationHelper.onSurfaceChanged(width, height)
             displayWidth = width
             displayHeight = height
         }
 
         override fun onDrawFrame(gl: GL10?) {
             glClear(GL_COLOR_BUFFER_BIT or GL_DEPTH_BUFFER_BIT)
+
+            displayRotationHelper.updateSessionIfNeeded(arSession)
 
             val frame = arSession.update()
             renderFrame(frame)

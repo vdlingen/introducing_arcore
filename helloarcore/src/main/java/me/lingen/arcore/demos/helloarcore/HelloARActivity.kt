@@ -19,10 +19,7 @@ package me.lingen.arcore.demos.helloarcore
 import android.os.Bundle
 import android.view.GestureDetector
 import android.view.MotionEvent
-import com.google.ar.core.Anchor
-import com.google.ar.core.Frame
-import com.google.ar.core.Plane
-import com.google.ar.core.PlaneHitResult
+import com.google.ar.core.*
 import me.lingen.arcore.ARCoreActivity
 import me.lingen.arcore.rendering.CameraRenderer
 import me.lingen.arcore.rendering.PlaneRenderer
@@ -81,29 +78,34 @@ class HelloARActivity : ARCoreActivity() {
 
     override fun renderFrame(frame: Frame) {
         cameraRenderer.render(frame)
-
-        if (frame.trackingState != Frame.TrackingState.TRACKING) return
-        if (frame.updatedPlanes.isNotEmpty()) hideStatusMessage()
+        
+        val updatedPlanes = frame.getUpdatedTrackables(Plane::class.java)
+        if (updatedPlanes.isNotEmpty()) hideStatusMessage()
 
         pendingTap?.let {
             frame.hitTest(it)
-                    .firstOrNull { it is PlaneHitResult && it.isHitInPolygon }
-                    ?.let { arSession.addAnchor(it.hitPose) }
+                    .firstOrNull {
+                        val trackable = it.trackable
+                        trackable is Plane && trackable.isPoseInPolygon(it.hitPose)
+                    }
+                    ?.let { it.createAnchor() }
 
             pendingTap = null
         }
 
-        arSession.getProjectionMatrix(projectionMatrix, 0, 0.1f, 100f)
-        frame.getViewMatrix(viewMatrix, 0)
+        frame.camera.getProjectionMatrix(projectionMatrix, 0, 0.1f, 100f)
+        frame.camera.getViewMatrix(viewMatrix, 0)
 
-        pointCloudRenderer.render(frame.pointCloud, frame.pointCloudPose, viewMatrix, projectionMatrix)
+        val pointCloud = frame.acquirePointCloud()
+        pointCloudRenderer.render(pointCloud, viewMatrix, projectionMatrix)
+        pointCloud.release()
 
-        arSession.allPlanes
-                .filter { it.trackingState == Plane.TrackingState.TRACKING }
+        arSession.getAllTrackables(Plane::class.java)
+                .filter { it.trackingState == Trackable.TrackingState.TRACKING }
                 .forEach { planeRenderer.render(it, viewMatrix, projectionMatrix)}
 
         arSession.allAnchors
-                .filter { it.trackingState == Anchor.TrackingState.TRACKING }
+                .filter { it.trackingState == Trackable.TrackingState.TRACKING }
                 .forEach {
                     it.pose.toMatrix(modelMatrix, 0)
                     modelRenderer?.render(modelMatrix, viewMatrix, projectionMatrix)

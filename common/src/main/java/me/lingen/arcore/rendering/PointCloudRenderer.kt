@@ -148,11 +148,11 @@ class PointCloudRenderer {
     private val modelMatrix = FloatArray(16)
     private val modelView = FloatArray(16)
 
-    fun render(pointCloud: PointCloud, pose: Pose, viewMatrix: FloatArray, projectionMatrix: FloatArray) {
+    fun render(pointCloud: PointCloud, viewMatrix: FloatArray, projectionMatrix: FloatArray) {
         update(pointCloud)
 
-        pose.toMatrix(modelMatrix, 0)
-        Matrix.multiplyMM(modelView, 0, viewMatrix, 0, modelMatrix, 0)
+//        pose.toMatrix(modelMatrix, 0)
+//        Matrix.multiplyMM(modelView, 0, viewMatrix, 0, modelMatrix, 0)
 
         checkGLError("PointCloudRenderer", "before render")
 
@@ -160,7 +160,7 @@ class PointCloudRenderer {
         glEnableVertexAttribArray(aPosition)
         glBindBuffer(GL_ARRAY_BUFFER, vboId)
         glVertexAttribPointer(aPosition, 4, GL_FLOAT, false, BYTES_PER_POINT, 0)
-        glUniformMatrix4fv(uModelViewMatrix, 1, false, modelView, 0)
+        glUniformMatrix4fv(uModelViewMatrix, 1, false, viewMatrix, 0)
         glUniformMatrix4fv(uProjectionMatrix, 1, false, projectionMatrix, 0)
 
         glDrawArrays(GL_POINTS, 0, numPoints)

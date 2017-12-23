@@ -102,7 +102,7 @@ class CameraRenderer(val textureId: Int) {
     }
 
     fun render(frame: Frame) {
-        if (frame.isDisplayRotationChanged)
+        if (frame.hasDisplayGeometryChanged())
             frame.transformDisplayUvCoords(texCoord, texCoordTransformed)
 
         glDisable(GL_DEPTH_TEST)

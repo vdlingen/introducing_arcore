@@ -17,10 +17,7 @@
 package me.lingen.arcore.demos.arcursor
 
 import android.os.Bundle
-import com.google.ar.core.Anchor
-import com.google.ar.core.Frame
-import com.google.ar.core.PlaneHitResult
-import com.google.ar.core.Pose
+import com.google.ar.core.*
 import me.lingen.arcore.ARCoreActivity
 import me.lingen.arcore.rendering.CameraRenderer
 import me.lingen.gltf.GlTF
@@ -51,14 +48,14 @@ class ARCursorActivity : ARCoreActivity() {
 
         arView.setOnClickListener {
             if (modelAnchor == null) {
-                modelAnchor = lastPose?.let { arSession.addAnchor(it) }
+                modelAnchor = lastPose?.let { arSession.createAnchor(it) }
             }
         }
     }
 
     override fun onBackPressed() {
         if (modelAnchor != null) {
-            arSession.removeAnchors(listOf(modelAnchor))
+            modelAnchor?.detach()
             modelAnchor = null
         } else {
             super.onBackPressed()
@@ -77,14 +74,15 @@ class ARCursorActivity : ARCoreActivity() {
     override fun renderFrame(frame: Frame) {
         cameraRenderer.render(frame)
 
-        if (frame.trackingState == Frame.TrackingState.NOT_TRACKING) return
-
         lastPose = frame.hitTest(0.5f * displayWidth, 0.5f * displayHeight)
-                .firstOrNull { it is PlaneHitResult && it.isHitInPolygon }
+                .firstOrNull {
+                    val trackable = it.trackable
+                    trackable is Plane && trackable.isPoseInPolygon(it.hitPose)
+                }
                 ?.hitPose
 
-        arSession.getProjectionMatrix(projectionMatrix, 0, 0.1f, 100f)
-        frame.getViewMatrix(viewMatrix, 0)
+        frame.camera.getProjectionMatrix(projectionMatrix, 0, 0.1f, 100f)
+        frame.camera.getViewMatrix(viewMatrix, 0)
 
         val anchor = modelAnchor
         if (anchor != null) {

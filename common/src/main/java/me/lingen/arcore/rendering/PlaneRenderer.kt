@@ -113,8 +113,8 @@ class PlaneRenderer(context: Context) {
 
     fun render(plane: Plane, viewMatrix: FloatArray, projectionMatrix: FloatArray) {
 
-        if (plane.planePolygon == null) return
-        updateVertexData(plane.planePolygon)
+        if (plane.polygon == null) return
+        updateVertexData(plane.polygon)
 
         plane.centerPose.toMatrix(model, 0)
 

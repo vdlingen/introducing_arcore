@@ -18,10 +18,7 @@ package me.lingen.arcore.demos.measuretape
 
 import android.os.Bundle
 import android.view.View
-import com.google.ar.core.Anchor
-import com.google.ar.core.Frame
-import com.google.ar.core.PlaneHitResult
-import com.google.ar.core.Pose
+import com.google.ar.core.*
 import kotlinx.android.synthetic.main.activity_measure.*
 import me.lingen.arcore.ARCoreActivity
 import me.lingen.arcore.rendering.CameraRenderer
@@ -44,14 +41,15 @@ class MeasureActivity : ARCoreActivity(R.layout.activity_measure, R.id.glSurface
             val end = endAnchor
 
             if (start != null && end != null) {
-                arSession.removeAnchors(listOf(start, end))
+                start.detach()
+                end.detach()
                 startAnchor = null
                 endAnchor = null
                 hideMeasurement()
             } else if (start == null) {
-                startAnchor = lastPose?.let { arSession.addAnchor(it) }
+                startAnchor = lastPose?.let { arSession.createAnchor(it) }
             } else {
-                endAnchor = lastPose?.let { arSession.addAnchor(it)}
+                endAnchor = lastPose?.let { arSession.createAnchor(it)}
             }
         }
     }
@@ -74,17 +72,14 @@ class MeasureActivity : ARCoreActivity(R.layout.activity_measure, R.id.glSurface
     override fun renderFrame(frame: Frame) {
         cameraRenderer.render(frame)
 
-        if (frame.trackingState != Frame.TrackingState.TRACKING) {
-            hideMeasurement()
-            return
-        }
-
         lastPose = frame.hitTest(0.5f * displayWidth, 0.5f * displayHeight)
-                .firstOrNull() { it is PlaneHitResult && it.isHitInPolygon }
+                .firstOrNull() {
+                    val trackable = it.trackable
+                    trackable is Plane && trackable.isPoseInPolygon(it.hitPose) }
                 ?.hitPose
 
-        arSession.getProjectionMatrix(projectionMatrix, 0, 0.1f, 100f)
-        frame.getViewMatrix(viewMatrix, 0)
+        frame.camera.getProjectionMatrix(projectionMatrix, 0, 0.1f, 100f)
+        frame.camera.getViewMatrix(viewMatrix, 0)
 
         val start = startAnchor
         val end = endAnchor
